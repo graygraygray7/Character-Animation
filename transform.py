@@ -24,25 +24,30 @@ while capture.isOpened() and frame_index < total:
         gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)    # 灰度
 
         frame = np.array(gray_frame)
-        frame  = frame // 75
+        frame  = frame // 60
         data =  list([0] for _ in range(30))
         for i in range(30):
             for j in frame[i]:
                 if j == 0:
-                    if data[i][-1] <200:
+                    if data[i][-1] < 200:
                         data[i][-1] += 1
                     else:
                         data[i].append(1)
                 elif j == 1:
-                    if 200 < data[i][-1] <400:
+                    if 200 < data[i][-1] < 400:
                         data[i][-1] += 1
                     else:
                         data[i].append(201)
-                else :
-                    if 200 < data[i][-1]:
+                elif j == 2:
+                    if 400 < data[i][-1] < 600:
                         data[i][-1] += 1
                     else:
                         data[i].append(401)
+                else:
+                    if 600 < data[i][-1]:
+                        data[i][-1] += 1
+                    else:
+                        data[i].append(601)
         data.append([-1])
         df = pd.DataFrame(data)
         df.fillna(0, inplace=True)
