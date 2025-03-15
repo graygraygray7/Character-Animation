@@ -37,7 +37,13 @@ def main(stdscr):
 
             for i in row:
                 i = int(i)
-                if i > 400:
+                if i > 600:
+                    for j in range(i % 200):
+                        try:
+                            stdscr.addstr(y, x + j, '#')
+                        except _curses.error:
+                            pass
+                elif i > 400:
                     for j in range(i % 200):
                         try:
                             stdscr.addstr(y, x + j, '*')
