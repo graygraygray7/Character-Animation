@@ -1,1 +1,7 @@
-# Character-Animation
+# Character-Animation 字符动画
+
+这是一个使用curses库在终端中播放动画的脚本。
+
+它可以实现从视频中读取数据并存入csv中。并根据存储的数据在终端上绘制字符动画。
+
+目前支持24帧视频的三灰度转换与绘制

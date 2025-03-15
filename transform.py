@@ -45,6 +45,8 @@ while capture.isOpened() and frame_index < total:
                         data[i].append(401)
         data.append([-1])
         df = pd.DataFrame(data)
+        df.fillna(0, inplace=True)
+        df.astype(int)
         df.to_csv(file_path, mode='a', index=False, header=False)
         frame_index += 1
 
