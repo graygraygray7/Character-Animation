@@ -1,11 +1,14 @@
-import cv2
+import cv2, json
 import pandas as pd
 import numpy as np
 
-media_path = "media.mp4"
-capture = cv2.VideoCapture(media_path)
+json_path = "control.json"
+with open(json_path) as file:
+    control = json.load(file)
+    csv_path = control["csv_path"]
+    media_path = control["media_path"]
 
-file_path = r"media.csv"
+capture = cv2.VideoCapture(media_path)
 
 if capture.isOpened() is False:
     print("Error opening video stream or file")
@@ -24,35 +27,20 @@ while capture.isOpened() and frame_index < total:
         gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)    # 灰度
 
         frame = np.array(gray_frame)
-        frame  = frame // 60
+        frame  = frame // 32
         data =  list([0] for _ in range(30))
         for i in range(30):
             for j in frame[i]:
-                if j == 0:
-                    if data[i][-1] < 200:
-                        data[i][-1] += 1
-                    else:
-                        data[i].append(1)
-                elif j == 1:
-                    if 200 < data[i][-1] < 400:
-                        data[i][-1] += 1
-                    else:
-                        data[i].append(201)
-                elif j == 2:
-                    if 400 < data[i][-1] < 600:
-                        data[i][-1] += 1
-                    else:
-                        data[i].append(401)
+                if 120*j < data[i][-1] < 120*(j+1)+1:
+                    data[i][-1] += 1
                 else:
-                    if 600 < data[i][-1]:
-                        data[i][-1] += 1
-                    else:
-                        data[i].append(601)
+                    data[i].append(120*j+1)
+
         data.append([-1])
         df = pd.DataFrame(data)
         df.fillna(0, inplace=True)
         df.astype(int)
-        df.to_csv(file_path, mode='a', index=False, header=False)
+        df.to_csv(csv_path, mode='a', index=False, header=False)
         frame_index += 1
 
         print("Complete: ",  frame_index, "/", total)

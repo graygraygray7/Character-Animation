@@ -1,0 +1,7 @@
+{
+  "frame_rate": 0.2,
+  "file_path": "D:\\py\\Character-Animation\\test.csv",
+  "media_path": "media.mp4",
+  "csv_path": "media.csv",
+  "characters": [" ", "·", "-", "~", "+", "0", "%", "@"]
+}

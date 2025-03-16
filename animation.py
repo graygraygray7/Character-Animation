@@ -1,10 +1,10 @@
 import _curses
-import csv, time, curses
+import csv, time, curses, json
 
 def main(stdscr):
     curses.curs_set(0)  # 隐藏光标
     stdscr.nodelay(1)  # 非阻塞输入
-    frame_rate = 24  # 帧率
+    # frame_rate = 24  # 帧率
     frame_delay = 1.0 / frame_rate  # 每帧的延迟时间
 
     with open(file_path) as file:
@@ -37,44 +37,57 @@ def main(stdscr):
 
             for i in row:
                 i = int(i)
-                if i > 600:
-                    for j in range(i % 200):
-                        try:
-                            stdscr.addstr(y, x + j, '#')
-                        except _curses.error:
-                            pass
-                elif i > 400:
-                    for j in range(i % 200):
-                        try:
-                            stdscr.addstr(y, x + j, '*')
-                        except _curses.error:
-                            pass
-                elif i > 200:
-                    for j in range(i % 200):
-                        try:
-                            stdscr.addstr(y, x + j, '-')
-                        except _curses.error:
-                            pass
-                else:
-                    for j in range(i % 200):
-                        try:
-                            stdscr.addstr(y, x + j, ' ')
-                        except _curses.error:
-                            # 功勋代码，舍不得删
-                            # print(y, x+j)
-                            # print(curses.LINES, curses.COLS)
-                            # time.sleep(0.5)
-                            # raise ValueError(y, x+j)
-                            # x = input("d")
-                            pass
 
-                x += (i % 200)
+                for j in range(0, i % 120, 1):
+                    try:
+                        stdscr.addstr(y, x + j, characters[(i-1)//120])
+                    except _curses.error:
+                        pass
+
+                # if i > 600:
+                #     for j in range(i % 200):
+                #         try:
+                #             stdscr.addstr(y, x + j, '#')
+                #         except _curses.error:
+                #             pass
+                # elif i > 400:
+                #     for j in range(i % 200):
+                #         try:
+                #             stdscr.addstr(y, x + j, '*')
+                #         except _curses.error:
+                #             pass
+                # elif i > 200:
+                #     for j in range(i % 200):
+                #         try:
+                #             stdscr.addstr(y, x + j, '·')
+                #         except _curses.error:
+                #             pass
+                # else:
+                #     for j in range(i % 200):
+                #         try:
+                #             stdscr.addstr(y, x + j, ' ')
+                #         except _curses.error:
+                #             # 功勋代码，舍不得删
+                #             # print(y, x+j)
+                #             # print(curses.LINES, curses.COLS)
+                #             # time.sleep(0.5)
+                #             # raise ValueError(y, x+j)
+                #             # x = input("d")
+                #             pass
+
+                x += (i % 120)
             y += 1
             x = 0
 
 if __name__ == "__main__":
     try:
-        file_path = r"D:\py\Character-Animation\media.csv"
+        json_path = "control.json"
+        with open(json_path, encoding="UTF-8") as file:
+            control = json.load(file)
+            file_path = control["file_path"]
+            frame_rate = control["frame_rate"]
+            characters = control["characters"]
+
         curses.wrapper(main)
 
     except KeyboardInterrupt:
