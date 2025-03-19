@@ -27,9 +27,11 @@ while capture.isOpened() and frame_index < total:
         gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)    # 灰度
 
         frame = np.array(gray_frame)
-        frame  = frame // 32
+        frame  = np.where(frame > 12,frame - 12 , 0)
+        frame = frame // 32
         data =  list([0] for _ in range(30))
         for i in range(30):
+            # print(frame[i])
             for j in frame[i]:
                 if 120*j < data[i][-1] < 120*(j+1)+1:
                     data[i][-1] += 1
@@ -44,6 +46,7 @@ while capture.isOpened() and frame_index < total:
         frame_index += 1
 
         print("Complete: ",  frame_index, "/", total)
+        # x = input()
 
     else:
         break

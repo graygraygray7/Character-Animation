@@ -1,4 +1,4 @@
-import json
+import json, pip
 
 json_path = "control.json"
 with open(json_path, encoding="UTF-8") as file:
@@ -8,4 +8,6 @@ with open(json_path, encoding="UTF-8") as file:
     characters = control["characters"]
 
 print(characters)
-print(123//120)
+for i in range(0, 1%120, 1):
+    print(i)
+print(pip.__file__)
