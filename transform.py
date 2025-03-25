@@ -23,11 +23,11 @@ while capture.isOpened() and frame_index < total:
     ret, frame = capture.read()
 
     if ret:
-        stretched_frame = cv2.resize(frame, (0, 0), fx=0.141, fy=0.0625 )  # 裁切
+        stretched_frame = cv2.resize(frame, (0, 0), fx=0.141, fy=0.1 )  # 裁切
         gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)    # 灰度
 
         frame = np.array(gray_frame)
-        frame  = np.where(frame > 12,frame - 12 , 0)
+        # frame  = np.where(frame > 12,frame - 12 , 0)
         frame = frame // 32
         data =  list([0] for _ in range(30))
         for i in range(30):
