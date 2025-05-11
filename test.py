@@ -1,13 +1,15 @@
-import json, pip
+import cv2
+import numpy as np
 
-json_path = "control.json"
-with open(json_path, encoding="UTF-8") as file:
-    control = json.load(file)
-    file_path = control["file_path"]
-    frame_rate = control["frame_rate"]
-    characters = control["characters"]
+frame: list = list(list([180, 24, 128] for _ in range(500)) for _ in range(500))
+frame = np.array(frame)
+frame = frame.astype(np.uint8)
+# print(frame)
+frame = cv2.cvtColor(frame, cv2.COLOR_LAB2BGR)
+print(frame)
 
-print(characters)
-for i in range(0, 1%120, 1):
-    print(i)
-print(pip.__file__)
+while True:
+    cv2.imshow("railgun", frame)
+
+    if cv2.waitKey(24) & 0xFF == ord('q'):  # 按 'q' 退出
+        break

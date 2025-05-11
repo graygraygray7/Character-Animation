@@ -25,7 +25,7 @@ def main(stdscr):
             #一行以内
             if row[0] == -1:
                 #
-                stdscr.addstr(0, 0, str(frame))
+                # stdscr.addstr(0, 0, str(frame))
                 stdscr.refresh()
 
                 # 动态控制延时，稳定刷新率

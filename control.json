@@ -1,7 +1,8 @@
 {
   "frame_rate": 23.976,
-  "file_path": "D:\\py\\Character-Animation\\media.csv",
+  "pixel": [120, 30],
+  "file_path": "D:\\Py\\Character-Animation\\media.csv",
   "media_path": "media.mp4",
   "csv_path": "media.csv",
-  "characters": [" ", "·", "-", "~", "+", "*", "%", "@"]
+  "characters": [" ", " ", "·", "·", "-", "+", "*", "#"]
 }

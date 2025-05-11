@@ -37,17 +37,30 @@ while cap.isOpened() and frame_index < total:
         ret, frame = cap.read()
 
         if ret:
+            # div = 128
+            # # stretched_frame = cv2.resize(frame, (0, 0), fx = 0.141, fy=0.0625)  # 原裁切
+            # stretched_frame = cv2.resize(frame, (0, 0), fx=120.0/width, fy=30.0/height)  # 裁切
+            #
+            # gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)   # 灰度
+            # gray_frame = gray_frame//32 * 32
+            # # frame = gray_frame
+            # frame = stretched_frame // div *div
+            #
+            # frame = cv2.resize(frame, (0, 0), fx=width/120, fy=height/30.0)  # 裁切
+
             div = 128
-            # stretched_frame = cv2.resize(frame, (0, 0), fx = 0.141, fy=0.0625)  # 裁切
-            stretched_frame = cv2.resize(frame, (0, 0), fx=120.0/width, fy=30.0/height)  # 裁切
-            stretched_frame = cv2.resize(stretched_frame, (0, 0), fx=width/120, fy=height/30.0)  # 裁切
-            gray_frame = cv2.cvtColor(stretched_frame, cv2.COLOR_BGR2GRAY)   # 灰度
-            gray_frame = gray_frame//32 * 32
-            # frame = gray_frame
-            frame = stretched_frame // div *div
+            frame = cv2.resize(frame, (0, 0), fx=120.0/width, fy=30.0/height)  # 裁切
+
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)   # 色彩转化
+            frame = frame//84
+            # frame = frame * 84
+            # frame = cv2.cvtColor(frame, cv2.COLOR_LAB2BGR)   # 色彩转化
+
+            frame = cv2.resize(frame, (0, 0), fx=width/120, fy=height/30.0)  # 裁切
 
             if not cha:
-                cv2.imshow("railgun", frame)
+                # cv2.imshow("railgun", frame)
+                print(frame)
                 prev_time = start_time
 
                 print("Complete: ",  frame_index, "/", total)
